@@ -18,6 +18,11 @@ public class Seeds implements ClickComparable {
 			ItemID.WATERING_CAN5, ItemID.WATERING_CAN6, ItemID.WATERING_CAN7, ItemID.WATERING_CAN8,
 			ItemID.GRICOLLERS_CAN
 	);
+	private static final Set<Integer> FILL_WATERING_CANS = ImmutableSet.of(
+			ItemID.WATERING_CAN, ItemID.WATERING_CAN1, ItemID.WATERING_CAN2, ItemID.WATERING_CAN3,
+			ItemID.WATERING_CAN4, ItemID.WATERING_CAN5, ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
+			ItemID.WATERING_CAN7, ItemID.GRICOLLERS_CAN
+	);
 	
 	private static final Set<String> TITHE_PATCHES = ImmutableSet.of(
 			"<col=ffff>Tithe patch"
@@ -63,7 +68,7 @@ public class Seeds implements ClickComparable {
 			event.setForceLeftClick(true);
 			
 		} else if (TITHE_WATER_BARREL.contains(event.getTarget())) {
-			if (plugin.findItem(WATERING_CANS).getLeft() == -1) {
+			if (plugin.findItem(FILL_WATERING_CANS).getLeft() == -1) {
 				return;
 			}
 			event.setOption("Use");
@@ -93,7 +98,7 @@ public class Seeds implements ClickComparable {
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 			
 		} else if (event.getTarget().contains("<col=ffff>Water Barrel") &&
-			plugin.updateSelectedItem(WATERING_CANS)) {
+			plugin.updateSelectedItem(FILL_WATERING_CANS)) {
 		event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 	}
 	}
