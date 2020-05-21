@@ -11,9 +11,9 @@ public class DarkEssence implements ClickComparable
 	public boolean isEntryValid(MenuEntry event)
 	{
 		return event.getOpcode() == MenuOpcode.ITEM_USE.getId() &&
-			event.getIdentifier() == ItemID.CHISEL;
+				event.getIdentifier() == ItemID.CHISEL;
 	}
-
+	
 	@Override
 	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
 	{
@@ -21,18 +21,18 @@ public class DarkEssence implements ClickComparable
 		{
 			return;
 		}
-
+		
 		event.setTarget("<col=ff9040>Chisel<col=ffffff> -> <col=ff9040>Dark essence block");
 		event.setForceLeftClick(true);
 	}
-
+	
 	@Override
 	public boolean isClickValid(MenuEntry event)
 	{
 		return event.getOpcode() == MenuOpcode.ITEM_USE.getId() &&
-			event.getTarget().contains("<col=ff9040>Chisel<col=ffffff> ->");
+				event.getTarget().contains("<col=ff9040>Chisel<col=ffffff> ->");
 	}
-
+	
 	@Override
 	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
 	{

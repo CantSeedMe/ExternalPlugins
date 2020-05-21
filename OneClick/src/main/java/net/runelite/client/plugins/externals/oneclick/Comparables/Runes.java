@@ -9,21 +9,21 @@ public class Runes implements ClickComparable
 {
 	private final String rune;
 	private final int id;
-
+	
 	public Runes(String rune, int id)
 	{
 		this.rune = "<col=ff9040>" + rune + "<col=ffffff> -> <col=ffff>Altar";
 		this.id = id;
 	}
-
+	
 	@Override
 	public boolean isEntryValid(MenuEntry event)
 	{
 		return event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId() &&
-			event.getOption().equals("Craft-rune") &&
-			event.getTarget().equals("<col=ffff>Altar");
+				event.getOption().equals("Craft-rune") &&
+				event.getTarget().equals("<col=ffff>Altar");
 	}
-
+	
 	@Override
 	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
 	{
@@ -31,7 +31,7 @@ public class Runes implements ClickComparable
 		{
 			return;
 		}
-
+		
 		if (!plugin.isImbue() && plugin.isEnableImbue())
 		{
 			event.setOption("Use");
@@ -43,14 +43,14 @@ public class Runes implements ClickComparable
 		event.setTarget(rune);
 		event.setForceLeftClick(true);
 	}
-
+	
 	@Override
 	public boolean isClickValid(MenuEntry event)
 	{
 		return (event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId() && event.getTarget().equals(rune)) ||
-			(event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId() && event.getTarget().equals("<col=ff9040>Magic Imbue<col=ffffff> -> <col=ffff>Yourself"));
+				(event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId() && event.getTarget().equals("<col=ff9040>Magic Imbue<col=ffffff> -> <col=ffff>Yourself"));
 	}
-
+	
 	@Override
 	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
 	{
@@ -60,8 +60,7 @@ public class Runes implements ClickComparable
 			{
 				event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 			}
-		}
-		else if (event.getTarget().equals("<col=ff9040>Magic Imbue<col=ffffff> -> <col=ffff>Yourself"))
+		} else if (event.getTarget().equals("<col=ff9040>Magic Imbue<col=ffffff> -> <col=ffff>Yourself"))
 		{
 			event.setIdentifier(1);
 			event.setOpcode(MenuOpcode.CC_OP.getId());

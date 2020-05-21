@@ -11,10 +11,10 @@ public class Tiara implements ClickComparable
 	public boolean isEntryValid(MenuEntry event)
 	{
 		return event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId() &&
-			event.getOption().equals("Craft-rune") &&
-			event.getTarget().equals("<col=ffff>Altar");
+				event.getOption().equals("Craft-rune") &&
+				event.getTarget().equals("<col=ffff>Altar");
 	}
-
+	
 	@Override
 	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
 	{
@@ -26,14 +26,14 @@ public class Tiara implements ClickComparable
 		event.setTarget("<col=ff9040>Tiara<col=ffffff> -> <col=ffff>Altar");
 		event.setForceLeftClick(true);
 	}
-
+	
 	@Override
 	public boolean isClickValid(MenuEntry event)
 	{
 		return event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId() &&
-			event.getTarget().equals("<col=ff9040>Tiara<col=ffffff> -> <col=ffff>Altar");
+				event.getTarget().equals("<col=ff9040>Tiara<col=ffffff> -> <col=ffff>Altar");
 	}
-
+	
 	@Override
 	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
 	{

@@ -10,22 +10,22 @@ public class Blank implements ClickComparable
 	{
 		return false;
 	}
-
+	
 	@Override
 	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
 	{
-
+	
 	}
-
+	
 	@Override
 	public boolean isClickValid(MenuEntry event)
 	{
 		return false;
 	}
-
+	
 	@Override
 	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
 	{
-
+	
 	}
 }

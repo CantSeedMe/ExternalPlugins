@@ -11,9 +11,9 @@ public class Compost implements ClickComparable
 	public boolean isEntryValid(MenuEntry event)
 	{
 		return event.getOpcode() == MenuOpcode.ITEM_USE.getId() &&
-			event.getIdentifier() == ItemID.COMPOST;
+				event.getIdentifier() == ItemID.COMPOST;
 	}
-
+	
 	@Override
 	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
 	{
@@ -21,18 +21,18 @@ public class Compost implements ClickComparable
 		{
 			return;
 		}
-
+		
 		event.setTarget("<col=ff9040>Saltpetre<col=ffffff> -> " + plugin.getTargetMap().get(event.getIdentifier()));
 		event.setForceLeftClick(true);
 	}
-
+	
 	@Override
 	public boolean isClickValid(MenuEntry event)
 	{
 		return event.getOpcode() == MenuOpcode.ITEM_USE.getId() &&
-			event.getIdentifier() == ItemID.COMPOST;
+				event.getIdentifier() == ItemID.COMPOST;
 	}
-
+	
 	@Override
 	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
 	{
