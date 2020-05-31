@@ -6,7 +6,6 @@ buildscript {
 
 plugins {
     java
-    checkstyle
 }
 
 apply<BootstrapPlugin>()
@@ -42,7 +41,6 @@ subprojects {
     }
     apply<JavaPlugin>()
     apply<JavaLibraryPlugin>()
-    apply(plugin = "checkstyle")
 
     dependencies {
         annotationProcessor(group = "org.projectlombok", name = "lombok", version = "1.18.12")
@@ -67,13 +65,6 @@ subprojects {
         implementation(group = "org.pushing-pixels", name = "radiance-substance", version = "2.5.1")
     }
 
-    checkstyle {
-        maxWarnings = 0
-        toolVersion = "8.25"
-        isShowViolations = true
-        isIgnoreFailures = false
-    }
-
     configure<JavaPluginConvention> {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -88,7 +79,7 @@ subprojects {
             doLast {
                 copy {
                     from("./build/libs/")
-                    into("../release/")
+                    into("C:/Users/SeaPound/.runelite/externalmanager")
                 }
             }
         }
@@ -98,10 +89,6 @@ subprojects {
             isReproducibleFileOrder = true
             dirMode = 493
             fileMode = 420
-        }
-
-        withType<Checkstyle> {
-            group = "verification"
         }
     }
 }

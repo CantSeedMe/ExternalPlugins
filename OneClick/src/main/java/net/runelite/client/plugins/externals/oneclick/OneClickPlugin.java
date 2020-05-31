@@ -343,14 +343,6 @@ public class OneClickPlugin extends Plugin {
 			}
 		}
 		
-		final Set<String> DWARF_CANNON = ImmutableSet.of(
-				"<col=ffff>Dwarf multicannon"
-		);
-		
-		final Set<Integer> TOOL_LEPRECHAUN = ImmutableSet.of(
-				NpcID.TOOL_LEPRECHAUN
-		);
-		
 		switch (type) {
 			
 			case BA_HEALER:
@@ -366,14 +358,14 @@ public class OneClickPlugin extends Plugin {
 					menuEntry.setOpcode(MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId());
 					client.setLeftClickMenuEntry(menuEntry);
 				}
-				if (event.getOpcode() == MenuOpcode.WALK.getId()) {
+				if (event.getOpcode() == MenuOpcode.WALK.getId() && event.getTarget().contains("<col=ffff>Tithe patch")) {
 					MenuEntry menuEntry = client.getLeftClickMenuEntry();
 					menuEntry.setOpcode(MenuOpcode.WALK.getId() + MENU_ACTION_DEPRIORITIZE_OFFSET);
 					client.setLeftClickMenuEntry(menuEntry);
 				}
 				break;
 			case DWARF_CANNON:
-				if (event.getOpcode() == MenuOpcode.WALK.getId() && DWARF_CANNON.contains(event.getTarget())) {
+				if (event.getOpcode() == MenuOpcode.WALK.getId() && event.getTarget().contains("<col=ffff>Dwarf multicannon")) {
 					MenuEntry menuEntry = client.getLeftClickMenuEntry();
 					menuEntry.setOpcode(MenuOpcode.WALK.getId() + MENU_ACTION_DEPRIORITIZE_OFFSET);
 					menuEntry.setOpcode(MenuOpcode.GAME_OBJECT_SECOND_OPTION.getId() + MENU_ACTION_DEPRIORITIZE_OFFSET);
@@ -382,7 +374,7 @@ public class OneClickPlugin extends Plugin {
 				}
 				break;
 			case FARMING_HERBS:
-				if (event.getOpcode() == MenuOpcode.EXAMINE_NPC.getId() && TOOL_LEPRECHAUN.contains(event.getIdentifier())) {
+				if (event.getOpcode() == MenuOpcode.EXAMINE_NPC.getId() && event.getTarget().contains("<col=ffff>Tool Leprechaun")) {
 					MenuEntry menuEntry = client.getLeftClickMenuEntry();
 					menuEntry.setOpcode(MenuOpcode.WALK.getId() + MENU_ACTION_DEPRIORITIZE_OFFSET);
 					menuEntry.setOpcode(MenuOpcode.NPC_SECOND_OPTION.getId() + MENU_ACTION_DEPRIORITIZE_OFFSET);
