@@ -352,6 +352,7 @@ public class OneClickPlugin extends Plugin {
 					client.setLeftClickMenuEntry(menuEntry);
 				}
 				break;
+			
 			case SEED_SET:
 				if (event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId()) {
 					MenuEntry menuEntry = client.getLeftClickMenuEntry();
@@ -364,6 +365,7 @@ public class OneClickPlugin extends Plugin {
 					client.setLeftClickMenuEntry(menuEntry);
 				}
 				break;
+			
 			case DWARF_CANNON:
 				if (event.getOpcode() == MenuOpcode.WALK.getId() && event.getTarget().contains("<col=ffff>Dwarf multicannon")) {
 					MenuEntry menuEntry = client.getLeftClickMenuEntry();
@@ -373,6 +375,7 @@ public class OneClickPlugin extends Plugin {
 					client.setLeftClickMenuEntry(menuEntry);
 				}
 				break;
+			
 			case FARMING_HERBS:
 				if (event.getOpcode() == MenuOpcode.EXAMINE_NPC.getId() && event.getTarget().contains("<col=ffff>Tool Leprechaun")) {
 					MenuEntry menuEntry = client.getLeftClickMenuEntry();
@@ -382,6 +385,7 @@ public class OneClickPlugin extends Plugin {
 					client.setLeftClickMenuEntry(menuEntry);
 				}
 				break;
+			
 			default:
 				break;
 		}
