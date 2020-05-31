@@ -4,8 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import net.runelite.api.ItemID;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.MenuOpcode;
-import net.runelite.api.ObjectID;
-import net.runelite.api.Varbits;
 import net.runelite.client.plugins.externals.oneclick.OneClickPlugin;
 
 import java.util.Set;
@@ -66,11 +64,6 @@ public class Farming implements ClickComparable {
 			ItemID.GUAM_LEAF, ItemID.RANARR_WEED
 	);
 	
-	// TOOL LEPRECHAUN
-	private static final Set<String> TOOL_LEPRECHAUN = ImmutableSet.of(
-			"<col=ffff>Tool Leprechaun"
-	);
-	
 	// (SPECIAL SEEDS) Types of Special seeds that can be used to left click on empty patch
 	private static final Set<Integer> SPECIAL_SEEDS = ImmutableSet.of(
 			ItemID.CACTUS_SEED, ItemID.BELLADONNA_SEED
@@ -88,13 +81,6 @@ public class Farming implements ClickComparable {
 	// Belladonna & Cactus patch
 	private static final Set<String> SPECIAL_FARM_PATCHES = ImmutableSet.of(
 			"<col=ffff>Belladonna", "<col=ffff>Cactus"
-	);
-	
-	// Weiss & Troll Stronghold patch
-	// 18822 = Weiss
-	// 18823 = Troll Stronghold
-	private static final Set<Integer> TROLL_FARM_PATCHES = ImmutableSet.of(
-			ObjectID.HERB_PATCH_18822, ObjectID.HERB_PATCH_18823
 	);
 	
 	// Herb patches that have seeds planted
@@ -116,14 +102,6 @@ public class Farming implements ClickComparable {
 						// Belladonna & Cacti patch
 						event.getOpcode() == MenuOpcode.GAME_OBJECT_SECOND_OPTION.getId() &&
 								SPECIAL_FARM_PATCHES.contains(event.getTarget()) ||
-						
-						// Weiss & Troll Stronghold patch
-						event.getOpcode() == MenuOpcode.GAME_OBJECT_SECOND_OPTION.getId() &&
-								TROLL_FARM_PATCHES.contains(Varbits.FARMING_4771.getId()) ||
-						
-						// Tool Leprechaun
-						event.getOpcode() == MenuOpcode.EXAMINE_OBJECT.getId() &&
-								TOOL_LEPRECHAUN.contains(event.getTarget()) ||
 						
 						// Compost Bin
 						event.getOpcode() == MenuOpcode.GAME_OBJECT_SECOND_OPTION.getId() &&
@@ -173,15 +151,6 @@ public class Farming implements ClickComparable {
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 			event.setForceLeftClick(true);
 			
-		} else if (TOOL_LEPRECHAUN.contains(event.getTarget())) {
-			if (plugin.findItem(HERB_TYPE).getLeft() == -1) {
-				return;
-			}
-			event.setOption("Use");
-			event.setTarget("<col=ff9040>Herb<col=ffffff> -> " + plugin.getTargetMap().get(event.getIdentifier()));
-			event.setOpcode(MenuOpcode.ITEM_USE_ON_NPC.getId());
-			event.setForceLeftClick(true);
-			
 		} else if (COMPOST_BIN.contains(event.getTarget())) {
 			if (plugin.findItem(EMPTY_BUCKET).getLeft() == -1) {
 				return;
@@ -223,7 +192,7 @@ public class Farming implements ClickComparable {
 				
 				// (HERB SEEDS) Using compost on patches
 				event.getTarget().contains("<col=ff9040>Compost<col=ffffff> -> ") &&
-						FARM_PATCHES_COMPOST.contains(event.getTarget()) ||
+						event.getTarget().contains("<col=ffff>Herbs")) ||
 				
 				// (SPECIAL PATCHES) Using compost on Belladonna
 				event.getTarget().contains("<col=ff9040>Compost<col=ffffff> -> ") &&
@@ -236,9 +205,6 @@ public class Farming implements ClickComparable {
 				// (SPECIAL PATCHES) Planting Belladonna seeds
 				event.getTarget().contains("<col=ff9040>Special seed<col=ffffff> -> ") &&
 						event.getTarget().contains("<col=ffff>Belladonna") ||
-				
-				// (SPECIAL PATCHES) Planting Cactus seeds
-				event.getTarget().contains("<col=ff9040>Special seed<col=ffffff> -> ") &&
 						event.getTarget().contains("<col=ffff>Cactus") ||
 				
 				// HERB TYPE
@@ -262,7 +228,7 @@ public class Farming implements ClickComparable {
 						event.getTarget().contains("<col=ffff>Limpwurt plant") ||
 				event.getTarget().contains("<col=ffff>Watermelon seed") ||
 				event.getTarget().contains("<col=ffff>Strawberry seed") ||
-				event.getTarget().contains("<col=ffff>Snape grass seedling"));
+				event.getTarget().contains("<col=ffff>Snape grass seedling");
 	}
 	
 	@Override
@@ -274,8 +240,6 @@ public class Farming implements ClickComparable {
 			
 		} else if (event.getTarget().contains("<col=ff9040>Compost<col=ffffff> -> ") &&
 				event.getTarget().contains("<col=ffff>Herbs") ||
-				TROLL_FARM_PATCHES.contains(Varbits.FARMING_4771.getId()) ||
-				event.getTarget().contains("<col=ff9040>Compost<col=ffffff> -> ") &&
 						event.getTarget().contains("<col=ffff>Limpwurt plant") ||
 				event.getTarget().contains("<col=ffff>Watermelon seed") ||
 				event.getTarget().contains("<col=ffff>Strawberry seed") ||
@@ -285,15 +249,9 @@ public class Farming implements ClickComparable {
 			
 		} else if (event.getTarget().contains("<col=ff9040>Special seed<col=ffffff> -> ") &&
 				event.getTarget().contains("<col=ffff>Belladonna") ||
-				event.getTarget().contains("<col=ff9040>Special seed<col=ffffff> -> ") &&
 						event.getTarget().contains("<col=ffff>Cactus")) {
 			plugin.updateSelectedItem(SPECIAL_SEEDS);
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
-			
-		} else if (event.getTarget().contains("<col=ff9040>Herb<col=ffffff> -> ") &&
-				event.getTarget().contains("<col=ffff>Tool Leprechaun")) {
-			plugin.updateSelectedItem(HERB_TYPE);
-			event.setOpcode(MenuOpcode.ITEM_USE_ON_NPC.getId());
 			
 		} else if (event.getTarget().contains("<col=ff9040>Bucket<col=ffffff> -> ") &&
 				event.getTarget().contains("<col=ffff>Compost Bin")) {

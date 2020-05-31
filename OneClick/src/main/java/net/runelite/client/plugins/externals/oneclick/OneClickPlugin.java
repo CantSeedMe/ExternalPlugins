@@ -376,16 +376,6 @@ public class OneClickPlugin extends Plugin {
 				}
 				break;
 			
-			case FARMING_HERBS:
-				if (event.getOpcode() == MenuOpcode.EXAMINE_NPC.getId() && event.getTarget().contains("<col=ffff>Tool Leprechaun")) {
-					MenuEntry menuEntry = client.getLeftClickMenuEntry();
-					menuEntry.setOpcode(MenuOpcode.WALK.getId() + MENU_ACTION_DEPRIORITIZE_OFFSET);
-					menuEntry.setOpcode(MenuOpcode.NPC_SECOND_OPTION.getId() + MENU_ACTION_DEPRIORITIZE_OFFSET);
-					menuEntry.setOpcode(MenuOpcode.NPC_FIRST_OPTION.getId() + MENU_ACTION_DEPRIORITIZE_OFFSET);
-					client.setLeftClickMenuEntry(menuEntry);
-				}
-				break;
-			
 			default:
 				break;
 		}
