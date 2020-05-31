@@ -31,8 +31,7 @@ import static net.runelite.api.ItemID.WATER_RUNE;
 
 @AllArgsConstructor
 @Getter
-public enum Types
-{
+public enum Types {
 	BA_HEALER("BA Healer", new Healer()),
 	BIRDHOUSES("Birdhouses", new Birdhouses()),
 	BONES("Bones", new Bones()),
@@ -40,7 +39,7 @@ public enum Types
 	DARK_ESSENCE("Dark Essence", new DarkEssence()),
 	DARTS("Darts", new Darts()),
 	DWARF_CANNON("Cannon", new Cannon()),
-	FARMING_HERBS("Herb Patches", new Farming()),
+	FARMING_HERBS("Farming", new Farming()),
 	FIREMAKING("Firemaking", new Firemaking()),
 	HERB_TAR("Herb Tar", new Herbtar()),
 	KARAMBWANS("Karambwans", new Karambwans()),
