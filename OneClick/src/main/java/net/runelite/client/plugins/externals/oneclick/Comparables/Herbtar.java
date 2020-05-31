@@ -8,26 +8,22 @@ import net.runelite.client.plugins.externals.oneclick.OneClickPlugin;
 
 import java.util.Set;
 
-public class Herbtar implements ClickComparable
-{
+public class Herbtar implements ClickComparable {
 	private static final Set<Integer> HERBS = ImmutableSet.of(
 			ItemID.GUAM_LEAF, ItemID.MARRENTILL, ItemID.TARROMIN, ItemID.HARRALANDER
 	);
 	
 	@Override
-	public boolean isEntryValid(MenuEntry event)
-	{
+	public boolean isEntryValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.ITEM_USE.getId() &&
 				HERBS.contains(event.getIdentifier());
 	}
 	
 	@Override
-	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
-	{
+	public void modifyEntry(OneClickPlugin plugin, MenuEntry event) {
 		if (plugin.findItem(ItemID.SWAMP_TAR).getLeft() == -1 ||
 				plugin.findItem(ItemID.PESTLE_AND_MORTAR).getLeft() == -1
-		)
-		{
+		) {
 			return;
 		}
 		event.setTarget("<col=ff9040>Swamp tar<col=ffffff> -> " + plugin.getTargetMap().get(event.getIdentifier()));
@@ -35,17 +31,14 @@ public class Herbtar implements ClickComparable
 	}
 	
 	@Override
-	public boolean isClickValid(MenuEntry event)
-	{
+	public boolean isClickValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.ITEM_USE.getId() &&
 				event.getTarget().contains("<col=ff9040>Swamp tar<col=ffffff> -> ");
 	}
 	
 	@Override
-	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (plugin.updateSelectedItem(ItemID.SWAMP_TAR))
-		{
+	public void modifyClick(OneClickPlugin plugin, MenuEntry event) {
+		if (plugin.updateSelectedItem(ItemID.SWAMP_TAR)) {
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_WIDGET_ITEM.getId());
 		}
 	}

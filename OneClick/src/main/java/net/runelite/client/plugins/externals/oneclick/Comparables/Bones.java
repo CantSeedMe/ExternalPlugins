@@ -8,8 +8,7 @@ import net.runelite.client.plugins.externals.oneclick.OneClickPlugin;
 
 import java.util.Set;
 
-public class Bones implements ClickComparable
-{
+public class Bones implements ClickComparable {
 	private static final Set<Integer> BONE_SET = ImmutableSet.of(
 			ItemID.BONES, ItemID.WOLF_BONE, ItemID.BURNT_BONES, ItemID.MONKEY_BONES, ItemID.BAT_BONES,
 			ItemID.JOGRE_BONE, ItemID.BIG_BONES, ItemID.ZOGRE_BONE, ItemID.SHAIKAHAN_BONES, ItemID.BABYDRAGON_BONES,
@@ -19,18 +18,15 @@ public class Bones implements ClickComparable
 	);
 	
 	@Override
-	public boolean isEntryValid(MenuEntry event)
-	{
+	public boolean isEntryValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId() &&
 				event.getOption().toLowerCase().contains("pray") &&
 				event.getTarget().toLowerCase().contains("altar");
 	}
 	
 	@Override
-	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (plugin.findItem(BONE_SET).getLeft() == -1)
-		{
+	public void modifyEntry(OneClickPlugin plugin, MenuEntry event) {
+		if (plugin.findItem(BONE_SET).getLeft() == -1) {
 			return;
 		}
 		event.setOption("Use");
@@ -39,18 +35,15 @@ public class Bones implements ClickComparable
 	}
 	
 	@Override
-	public boolean isClickValid(MenuEntry event)
-	{
+	public boolean isClickValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.GAME_OBJECT_FIRST_OPTION.getId() &&
 				event.getTarget().contains("<col=ff9040>Bones<col=ffffff> -> ") &&
 				event.getTarget().toLowerCase().contains("altar");
 	}
 	
 	@Override
-	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (plugin.updateSelectedItem(BONE_SET))
-		{
+	public void modifyClick(OneClickPlugin plugin, MenuEntry event) {
+		if (plugin.updateSelectedItem(BONE_SET)) {
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 		}
 	}

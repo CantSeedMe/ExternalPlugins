@@ -1,15 +1,20 @@
 package net.runelite.client.plugins.externals.oneclick.Comparables;
 
 import com.google.common.collect.ImmutableSet;
+import net.runelite.api.Client;
+import net.runelite.api.InventoryID;
+import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.MenuOpcode;
 import net.runelite.client.plugins.externals.oneclick.OneClickPlugin;
 
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-public class Seeds implements ClickComparable
-{
+public class Seeds implements ClickComparable {
 	
 	private static final Set<Integer> SEED_SET = ImmutableSet.of(
 			ItemID.GOLOVANOVA_SEED, ItemID.BOLOGANO_SEED, ItemID.LOGAVANO_SEED
@@ -21,8 +26,7 @@ public class Seeds implements ClickComparable
 	);
 	private static final Set<Integer> FILL_WATERING_CANS = ImmutableSet.of(
 			ItemID.WATERING_CAN, ItemID.WATERING_CAN1, ItemID.WATERING_CAN2, ItemID.WATERING_CAN3,
-			ItemID.WATERING_CAN4, ItemID.WATERING_CAN5, ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
-			ItemID.WATERING_CAN7, ItemID.GRICOLLERS_CAN
+			ItemID.WATERING_CAN4, ItemID.WATERING_CAN5, ItemID.WATERING_CAN6, ItemID.WATERING_CAN7
 	);
 	
 	private static final Set<String> TITHE_PATCHES = ImmutableSet.of(
@@ -38,9 +42,14 @@ public class Seeds implements ClickComparable
 			"<col=ffff>Water Barrel"
 	);
 	
+	@Inject
+	Client client;
+	
+	private final List<Integer> items = new ArrayList<Integer>();
+	
+	
 	@Override
-	public boolean isEntryValid(MenuEntry event)
-	{
+	public boolean isEntryValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.EXAMINE_OBJECT.getId() &&
 				TITHE_PATCHES.contains(event.getTarget()) ||
 				event.getOpcode() == MenuOpcode.GAME_OBJECT_SECOND_OPTION.getId() &&
@@ -49,13 +58,23 @@ public class Seeds implements ClickComparable
 						TITHE_WATER_BARREL.contains(event.getTarget());
 	}
 	
+	//TODO: MAKE TITHE FARM FILLING WATER CANS ON WATER BARREL ONE-CLICKABLE FOR ALL WATERING CANS (0) - (7)
+
+//	protected int countItemInInventory(int itemID) {
+//		int i = 0;
+//		Widget widget = client.getWidget(WidgetInfo.INVENTORY);
+//		for (WidgetItem widgetItem : widget.getWidgetItems()) {
+//			if (widgetItem.getId() == itemID) {
+//				i++;
+//			}
+//		}
+//		return i;
+//	}
+	
 	@Override
-	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (TITHE_PATCHES.contains(event.getTarget()))
-		{
-			if (plugin.findItem(SEED_SET).getLeft() == -1)
-			{
+	public void modifyEntry(OneClickPlugin plugin, MenuEntry event) {
+		if (TITHE_PATCHES.contains(event.getTarget())) {
+			if (plugin.findItem(SEED_SET).getLeft() == -1) {
 				return;
 			}
 			event.setOption("Use");
@@ -63,10 +82,8 @@ public class Seeds implements ClickComparable
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 			event.setForceLeftClick(true);
 			
-		} else if (TITHE_PATCHES_WATER.contains(event.getTarget()))
-		{
-			if (plugin.findItem(WATERING_CANS).getLeft() == -1)
-			{
+		} else if (TITHE_PATCHES_WATER.contains(event.getTarget())) {
+			if (plugin.findItem(WATERING_CANS).getLeft() == -1) {
 				return;
 			}
 			event.setOption("Use");
@@ -74,13 +91,11 @@ public class Seeds implements ClickComparable
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 			event.setForceLeftClick(true);
 			
-		} else if (TITHE_WATER_BARREL.contains(event.getTarget()))
-		{
-			if (plugin.findItem(FILL_WATERING_CANS).getLeft() == -1)
-			{
+		} else if (TITHE_WATER_BARREL.contains(event.getTarget())) {
+			if (plugin.findItem(FILL_WATERING_CANS).getLeft() == -1) {
 				return;
 			}
-			event.setOption("Use");
+			items.addAll(FILL_WATERING_CANS);
 			event.setTarget("<col=ff9040>Watering can<col=ffffff> -> " + plugin.getTargetMap().get(event.getIdentifier()));
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 			event.setForceLeftClick(true);
@@ -88,8 +103,7 @@ public class Seeds implements ClickComparable
 	}
 	
 	@Override
-	public boolean isClickValid(MenuEntry event)
-	{
+	public boolean isClickValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId() &&
 				event.getTarget().contains("<col=ff9040>Seed<col=ffffff> -> ") ||
 				event.getTarget().contains("<col=ff9040>Watering can<col=ffffff> -> ") ||
@@ -98,21 +112,18 @@ public class Seeds implements ClickComparable
 	}
 	
 	@Override
-	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (event.getTarget().contains("<col=ff9040>Seed<col=ffffff> -> "))
-		{
-			if (plugin.updateSelectedItem(SEED_SET))
-				event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
-			
-		} else if (event.getTarget().contains("<col=ff9040>Watering can<col=ffffff> -> ") &&
-				plugin.updateSelectedItem(WATERING_CANS))
-		{
+	public void modifyClick(OneClickPlugin plugin, MenuEntry event) {
+		if (event.getTarget().contains("<col=ff9040>Seed<col=ffffff> -> ")) {
+			plugin.updateSelectedItem(SEED_SET);
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 			
-		} else if (event.getTarget().contains("<col=ffff>Water Barrel") &&
-				plugin.updateSelectedItem(FILL_WATERING_CANS))
-		{
+		} else if (event.getTarget().contains("<col=ff9040>Watering can<col=ffffff> -> ")) {
+			plugin.updateSelectedItem(WATERING_CANS);
+			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
+			
+		} else if (event.getTarget().contains("<col=ff9040>Watering can<col=ffffff> -> ") &&
+				event.getTarget().contains("<col=ffff>Water Barrel")) {
+			plugin.updateSelectedItem(FILL_WATERING_CANS);
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 		}
 	}

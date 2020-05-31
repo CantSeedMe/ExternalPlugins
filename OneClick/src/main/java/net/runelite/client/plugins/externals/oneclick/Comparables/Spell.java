@@ -11,15 +11,13 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.function.Predicate;
 
 @Slf4j
-public class Spell implements ClickComparable
-{
+public class Spell implements ClickComparable {
 	private final Predicate<MenuEntry> cast;
 	private final Predicate<MenuEntry> reset;
 	private final Predicate<MenuEntry> set;
 	private final String spell;
 	
-	public Spell(String spell)
-	{
+	public Spell(String spell) {
 		this.spell = spell;
 		this.cast = (event) -> event.getOpcode() == MenuOpcode.WIDGET_TYPE_2.getId() &&
 				event.getOption().equals("Cast") &&
@@ -30,18 +28,15 @@ public class Spell implements ClickComparable
 	}
 	
 	@Override
-	public boolean isEntryValid(MenuEntry event)
-	{
+	public boolean isEntryValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.WIDGET_TYPE_2.getId() &&
 				event.getOption().equals("Cast") &&
 				event.getTarget().equals("<col=00ff00>" + spell + "</col>");
 	}
 	
 	@Override
-	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (plugin.getClickItem() == null)
-		{
+	public void modifyEntry(OneClickPlugin plugin, MenuEntry event) {
+		if (plugin.getClickItem() == null) {
 			return;
 		}
 		
@@ -51,25 +46,20 @@ public class Spell implements ClickComparable
 	}
 	
 	@Override
-	public boolean isClickValid(MenuEntry event)
-	{
+	public boolean isClickValid(MenuEntry event) {
 		return cast.test(event) || reset.test(event) || set.test(event);
 	}
 	
 	@Override
-	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (cast.test(event))
-		{
-			if (plugin.getClickItem() == null)
-			{
+	public void modifyClick(OneClickPlugin plugin, MenuEntry event) {
+		if (cast.test(event)) {
+			if (plugin.getClickItem() == null) {
 				return;
 			}
 			
 			final Pair<Integer, Integer> pair = plugin.findItem(plugin.getClickItem().getId());
 			
-			if (pair.getLeft() != -1)
-			{
+			if (pair.getLeft() != -1) {
 				event.setOpcode(MenuOpcode.ITEM_USE_ON_WIDGET.getId());
 				event.setIdentifier(pair.getLeft());
 				event.setParam0(pair.getRight());
@@ -77,11 +67,9 @@ public class Spell implements ClickComparable
 				plugin.getClient().setSelectedSpellName("<col=00ff00>" + spell + "</col>" + "<col=ffffff>");
 				plugin.getClient().setSelectedSpellWidget(plugin.getSpellSelection().getWidgetInfo().getId());
 			}
-		} else if (reset.test(event))
-		{
+		} else if (reset.test(event)) {
 			plugin.setClickItem(null);
-		} else if (set.test(event))
-		{
+		} else if (set.test(event)) {
 			final String itemName = event.getTarget().split("->")[1];
 			plugin.setClickItem(new ClickItem(itemName, event.getIdentifier()));
 		}

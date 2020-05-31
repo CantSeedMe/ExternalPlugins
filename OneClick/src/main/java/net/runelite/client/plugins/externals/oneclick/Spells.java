@@ -22,9 +22,9 @@ public enum Spells
 	ENCHANT_ZENYTE("Zenyte", WidgetInfo.SPELL_LVL_7_ENCHANT, new Spell("Lvl-7 Enchant")),
 	NONE("None", null, new Blank());
 
-	private String spells;
-	private WidgetInfo widgetInfo;
-	private ClickComparable comparable;
+	private final String spells;
+	private final WidgetInfo widgetInfo;
+	private final ClickComparable comparable;
 
 	@Override
 	public String toString()

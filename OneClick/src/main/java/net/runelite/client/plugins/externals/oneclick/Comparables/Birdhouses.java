@@ -8,8 +8,7 @@ import net.runelite.client.plugins.externals.oneclick.OneClickPlugin;
 
 import java.util.Set;
 
-public class Birdhouses implements ClickComparable
-{
+public class Birdhouses implements ClickComparable {
 	private static final Set<Integer> HOPS_SEED = ImmutableSet.of(
 			ItemID.BARLEY_SEED, ItemID.HAMMERSTONE_SEED, ItemID.ASGARNIAN_SEED,
 			ItemID.JUTE_SEED, ItemID.YANILLIAN_SEED, ItemID.KRANDORIAN_SEED, ItemID.WILDBLOOD_SEED
@@ -22,17 +21,15 @@ public class Birdhouses implements ClickComparable
 	);
 	
 	@Override
-	public boolean isEntryValid(MenuEntry event)
-	{
-		return event.getOpcode() == MenuOpcode.GAME_OBJECT_SECOND_OPTION.getId() &&
-				BIRD_HOUSES_NAMES.contains(event.getTarget());
+	public boolean isEntryValid(MenuEntry event) {
+		return
+				event.getOpcode() == MenuOpcode.GAME_OBJECT_SECOND_OPTION.getId() &&
+						BIRD_HOUSES_NAMES.contains(event.getTarget());
 	}
 	
 	@Override
-	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (plugin.findItem(HOPS_SEED).getLeft() == -1)
-		{
+	public void modifyEntry(OneClickPlugin plugin, MenuEntry event) {
+		if (plugin.findItem(HOPS_SEED).getLeft() == -1) {
 			return;
 		}
 		
@@ -43,15 +40,13 @@ public class Birdhouses implements ClickComparable
 	}
 	
 	@Override
-	public boolean isClickValid(MenuEntry event)
-	{
+	public boolean isClickValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId() &&
 				event.getTarget().contains("<col=ff9040>Hops seed<col=ffffff> -> ");
 	}
 	
 	@Override
-	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
-	{
+	public void modifyClick(OneClickPlugin plugin, MenuEntry event) {
 		plugin.updateSelectedItem(HOPS_SEED);
 	}
 }

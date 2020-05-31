@@ -8,8 +8,7 @@ import net.runelite.client.plugins.externals.oneclick.OneClickPlugin;
 
 import java.util.Set;
 
-public class Darts implements ClickComparable
-{
+public class Darts implements ClickComparable {
 	private static final Set<Integer> BOLTS = ImmutableSet.of(
 			ItemID.BRONZE_BOLTS_UNF, ItemID.IRON_BOLTS_UNF, ItemID.STEEL_BOLTS_UNF,
 			ItemID.MITHRIL_BOLTS_UNF, ItemID.ADAMANT_BOLTSUNF, ItemID.RUNITE_BOLTS_UNF,
@@ -22,17 +21,14 @@ public class Darts implements ClickComparable
 	);
 	
 	@Override
-	public boolean isEntryValid(MenuEntry event)
-	{
+	public boolean isEntryValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.ITEM_USE.getId() &&
 				(DART_TIPS.contains(event.getIdentifier()) || BOLTS.contains(event.getIdentifier()));
 	}
 	
 	@Override
-	public void modifyEntry(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (plugin.findItem(ItemID.FEATHER).getLeft() == -1)
-		{
+	public void modifyEntry(OneClickPlugin plugin, MenuEntry event) {
+		if (plugin.findItem(ItemID.FEATHER).getLeft() == -1) {
 			return;
 		}
 		
@@ -41,17 +37,14 @@ public class Darts implements ClickComparable
 	}
 	
 	@Override
-	public boolean isClickValid(MenuEntry event)
-	{
+	public boolean isClickValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.ITEM_USE.getId() &&
 				event.getTarget().contains("<col=ff9040>Feather<col=ffffff> -> ");
 	}
 	
 	@Override
-	public void modifyClick(OneClickPlugin plugin, MenuEntry event)
-	{
-		if (plugin.updateSelectedItem(ItemID.FEATHER))
-		{
+	public void modifyClick(OneClickPlugin plugin, MenuEntry event) {
+		if (plugin.updateSelectedItem(ItemID.FEATHER)) {
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_WIDGET_ITEM.getId());
 		}
 	}
