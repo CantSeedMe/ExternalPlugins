@@ -82,7 +82,6 @@ public class OneClickPlugin extends Plugin {
 	private Spells spellSelection = Spells.NONE;
 	private Types type = Types.NONE;
 	private String roleText = "";
-	
 	private boolean enableImbue;
 	private boolean imbue;
 	private boolean tick;

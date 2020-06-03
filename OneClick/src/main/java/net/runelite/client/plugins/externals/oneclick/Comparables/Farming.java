@@ -205,7 +205,7 @@ public class Farming implements ClickComparable {
 				// (SPECIAL PATCHES) Planting Belladonna seeds
 				event.getTarget().contains("<col=ff9040>Special seed<col=ffffff> -> ") &&
 						event.getTarget().contains("<col=ffff>Belladonna") ||
-						event.getTarget().contains("<col=ffff>Cactus") ||
+				event.getTarget().contains("<col=ffff>Cactus") ||
 				
 				// HERB TYPE
 				event.getTarget().contains("<col=ff9040>Herb<col=ffffff> -> ") &&
@@ -240,7 +240,7 @@ public class Farming implements ClickComparable {
 			
 		} else if (event.getTarget().contains("<col=ff9040>Compost<col=ffffff> -> ") &&
 				event.getTarget().contains("<col=ffff>Herbs") ||
-						event.getTarget().contains("<col=ffff>Limpwurt plant") ||
+				event.getTarget().contains("<col=ffff>Limpwurt plant") ||
 				event.getTarget().contains("<col=ffff>Watermelon seed") ||
 				event.getTarget().contains("<col=ffff>Strawberry seed") ||
 				event.getTarget().contains("<col=ffff>Snape grass seedling")) {
@@ -249,7 +249,7 @@ public class Farming implements ClickComparable {
 			
 		} else if (event.getTarget().contains("<col=ff9040>Special seed<col=ffffff> -> ") &&
 				event.getTarget().contains("<col=ffff>Belladonna") ||
-						event.getTarget().contains("<col=ffff>Cactus")) {
+				event.getTarget().contains("<col=ffff>Cactus")) {
 			plugin.updateSelectedItem(SPECIAL_SEEDS);
 			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
 			

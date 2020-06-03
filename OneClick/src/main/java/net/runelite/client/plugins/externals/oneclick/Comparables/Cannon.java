@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class Cannon implements ClickComparable {
 	
+	
 	private static final Set<Integer> CANNONBALL = ImmutableSet.of(
 			ItemID.CANNONBALL
 	);
@@ -21,18 +22,19 @@ public class Cannon implements ClickComparable {
 	@Override
 	public boolean isEntryValid(MenuEntry event) {
 		return event.getOpcode() == MenuOpcode.EXAMINE_OBJECT.getId() &&
-						DWARF_CANNON.contains(event.getTarget());
+				DWARF_CANNON.contains(event.getTarget());
 	}
+	
 	
 	@Override
 	public void modifyEntry(OneClickPlugin plugin, MenuEntry event) {
-			if (plugin.findItem(ItemID.CANNONBALL).getLeft() == -1) {
-				return;
-			}
-			event.setOption("Use");
-			event.setTarget("<col=ff9040>Cannonball<col=ffffff> -> " + plugin.getTargetMap().get(event.getIdentifier()));
-			event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
-			event.setForceLeftClick(true);
+		if (plugin.findItem(ItemID.CANNONBALL).getLeft() == -1) {
+			return;
+		}
+		event.setOption("Use");
+		event.setTarget("<col=ff9040>Cannonball<col=ffffff> -> " + plugin.getTargetMap().get(event.getIdentifier()));
+		event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());
+		event.setForceLeftClick(true);
 	}
 	
 	@Override
@@ -43,7 +45,6 @@ public class Cannon implements ClickComparable {
 	
 	@Override
 	public void modifyClick(OneClickPlugin plugin, MenuEntry event) {
-		
 		if (event.getTarget().contains("<col=ff9040>Cannonball<col=ffffff> -> ")) {
 			if (plugin.updateSelectedItem(CANNONBALL)) {
 				event.setOpcode(MenuOpcode.ITEM_USE_ON_GAME_OBJECT.getId());

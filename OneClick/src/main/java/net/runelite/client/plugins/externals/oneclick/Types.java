@@ -32,14 +32,15 @@ import static net.runelite.api.ItemID.WATER_RUNE;
 @AllArgsConstructor
 @Getter
 public enum Types {
+	
 	BA_HEALER("BA Healer", new Healer()),
 	BIRDHOUSES("Birdhouses", new Birdhouses()),
 	BONES("Bones", new Bones()),
+	DWARF_CANNON("Cannon", new Cannon()),
 	COMPOST("Compost", new Compost()),
 	DARK_ESSENCE("Dark Essence", new DarkEssence()),
 	DARTS("Darts", new Darts()),
-	DWARF_CANNON("Cannon", new Cannon()),
-	FARMING_HERBS("Farming", new Farming()),
+	FARMING("Farming", new Farming()),
 	FIREMAKING("Firemaking", new Firemaking()),
 	HERB_TAR("Herb Tar", new Herbtar()),
 	KARAMBWANS("Karambwans", new Karambwans()),
@@ -50,13 +51,13 @@ public enum Types {
 	STEAM_RUNES("Steam Runes", new Runes("Water rune", WATER_RUNE)),
 	TIARA("Tiara", new Tiara()),
 	NONE("None", new Blank());
-
+	
 	private final String name;
 	private final ClickComparable comparable;
-
+	
+	
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return getName();
 	}
 }

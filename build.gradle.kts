@@ -79,7 +79,7 @@ subprojects {
             doLast {
                 copy {
                     from("./build/libs/")
-                    into("C:/Users/SeaPound/.runelite/externalmanager")
+                    into("../release/")
                 }
             }
         }
